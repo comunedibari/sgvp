@@ -28,7 +28,7 @@ Tra le funzionalità principali del sistema:
 - integrazione con LDAP per autenticazione
 - gestione di modelli differenti per ogni collezione definita (serie)
 - visualizzazione dell'anteprima del modello definito
-- anonimizzazione dei dati personali a fine trattamento
+- anonimizzazione dei dati personali associati al singolo pass, alla sottoserie o alla serie completa 
 
 L'url codificato nel QR code è parametrizzato in una variabile di environment con il placeholder {badge_id} che indica l'uuid che identifica il Pass.
 
