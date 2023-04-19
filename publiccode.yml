@@ -6,61 +6,86 @@ publiccodeYmlVersion: '0.2'
 applicationSuite: SGVP Gestione e Verifica Pass
 categories:
   - grant-management
+  - document-management
+  - event-management
+  - visitor-management
 description:
   it:
-    documentation: 'https://verificapass.comune.bari.it'
+    documentation: |-
+      https://github.com/comunedibari/sgvp/raw/main/docs/Manuale%20Sistema%20Verifica%20Pass.pdf
     features:
       - classificazione pass a 2 livelli
-      - |-
-        modello del pass configurabile sia in dimensioni che in tipo QR code e
-        posizioni di stampa
-      - lista metadati per ogni modello pass illimitata
-      - 'metadati con tipologia tra: file, immagine, testo, stringa, data'
-      - generazione dei pass in blocco in un unico PDF
+      - modello stampa pass configurabile
+      - lista illimitata di metadati per modello pass
+      - 'tipologia di metadati: file, immagine, testo, stringa, data'
+      - generazione stampa massiva dei pass di una selezione in un unico PDF
+      - 'QR code configurabile (versione, bordo, qualità)'
     genericName: SGVP Gestione e Verifica Pass
     localisedName: SGVP Gestione e Verifica Pass
     longDescription: |+
       Il sistema nasce dalla necessità di gestire tramite un portale i pass
+
       emessi dall'ente comune utilizzati per il riconoscimento:
+
 
       - dei veicoli dell’autoparco
 
+
       - degli operatori dello staff nominato in caso di eventi gestiti dall'ente
 
+
       I Pass generati dal SGVP sono riproducibili su supporto cartaceo ed
+
       espongono un QR Code che contiene l’url sul dominio certificato su cui 
+
 
       vengono pubblicati i dati relativi al Pass.
        
 
       Il sistema è estremamente flessibile nella definizione del set di dati da
+
       associare al Pass, e nella configurazione di stampa dello stesso.
 
+
       Ogni pass è basato sul censimento di un modello sul quale è possibile
+
       definire un numero illimitato di metadati, ogni metadato ha una tipologia
+
       tra:
+
 
       - Stringa
 
+
       - Testo
+
 
       - Data
 
+
       - File
+
 
       - Immagine
 
+
       e attributi come:
+
 
       - privato
 
+
       - stampabile
+
 
       - obbligatorio
 
 
+
       L'url codificato nel QR code è parametrizzato in una variabile di
+
       environment con il placeholder {badge\_id} che indica l'uuid che
+
       identifica il Pass.
 
     shortDescription: 'Sistema di Gestione e Verifica dei Pass '
@@ -72,7 +97,7 @@ intendedAudience:
     - local-authorities
 it:
   conforme:
-    gdpr: false
+    gdpr: true
     lineeGuidaDesign: true
     misureMinimeSicurezza: true
     modelloInteroperabilita: false
@@ -109,3 +134,5 @@ releaseDate: '2023-03-15'
 softwareType: standalone/web
 softwareVersion: '1.0'
 url: 'https://github.com/comunedibari/sgvp.git'
+usedBy:
+  - Comune di Bari
