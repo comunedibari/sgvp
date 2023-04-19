@@ -11,4 +11,3 @@ prod.env
 requirements.txt
 restart.sh
 dja_badge_site/db.sqlite3
-gunicorn_start
