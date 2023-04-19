@@ -1,0 +1,14 @@
+.venv/
+dja_badge_site/badge/__pycache__/*
+dja_badge_site/badge/views/__pycache__/**
+dja_badge_site/badge/views/__pycache__/*
+dja_badge_site/dja_badge_site/__pycache__/*
+dja_badge_site/badge/migrations/__pycache__/**
+dja_badge_site/file_sfondo/**
+dja_badge_site/media/*
+dja_badge_site/dbdevel.sqlite3
+prod.env
+requirements.txt
+restart.sh
+dja_badge_site/db.sqlite3
+gunicorn_start

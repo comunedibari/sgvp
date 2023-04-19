@@ -1,0 +1,17 @@
+{% extends 'badge/base.html' %}
+{% load i18n %}
+
+{% block centered_container %}
+    <h4>{% trans "Errore 404" %}</h4>
+    <p>{% trans "risorsa non trovata 404" %}</p>
+    <div style="text-align:center;">
+        <a class="btn btn-primary btn-icon btn-me" role="button" href="{% url 'home' %}">
+          <span class="rounded-icon">
+          <svg class="icon icon-primary">
+              <use href="/static/svg/sprites.svg#it-arrow-left"></use>
+          </svg>
+          </span>
+          <span>Torna alla home</span>
+        </a>
+      </div>
+{% endblock centered_container %}

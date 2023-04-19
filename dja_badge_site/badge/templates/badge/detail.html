@@ -1,0 +1,73 @@
+{% extends "badge/base.html" %}
+
+<!-- container Home -->
+{% block centered_container %}
+<div class="row p-1">
+    <div class="col-md-4">
+        <h4 style="border-radius:3px;color:white;" class="p-1 {%if badge.is_valido %}bg-success{%else%}bg-danger{%endif%}">
+            <b>&nbsp;Pass {% if badge.is_valido %}Valido{%else%}Scaduto{%endif%}</b>
+        </h4>
+    </div>
+</div>
+<div class="row p-3">
+    <div class="col-12 col-lg-12">
+      <!--start card-->
+            {% include 'badge/includes/title.html' with titolo="Dettaglio PASS" %}
+            <div class="">
+                <table class="table">
+                    <tbody>
+                        <tr><td style="width:20%">Codice</td><td><b>{{ badge.codice }}</b></td></tr>
+                        <tr><td style="width:20%">Descrizione</td><td><b>{{ badge.descrizione }}</b></td></tr>
+                        <tr><td style="width:20%">Tipo Pass</td><td><b>{{ sottoSerie.nome }}</b></td></tr>
+                        <tr><td style="width:20%">Inizio validità</td><td><b>{{badge.data_inizio_validita}}</b></td></tr>
+                        <tr><td style="width:20%">Fine validità</td><td><b>{{badge.get_data_fine_validita_display}}</b></td></tr>
+                    </tbody>      
+                </table>    
+                {% if is_staff_or_superuser %}    
+                    <a style="margin-bottom:1.5rem;" href="{% url 'badge_print_by_id' badge.id %}" class="btn btn-primary" role="button" aria-disabled="false">Download PASS</a>
+                {% endif %}
+                {% if user.is_authenticated is not True %}    
+                    <a style="margin-bottom:1.5rem;" href="{% url 'login'%}?next={% url 'badge_detail_by_id' badge.id %}" class="btn btn-primary" role="button" aria-disabled="false">Visualizza altri dati</a>
+                {% endif %}
+                <h6>Metadati:</h6>
+                <table class="table">
+                    <tbody>
+                            {% for istanza_metadato in metadati %}
+                            <tr>
+                                <td style="width:20%">
+                                    {% if istanza_metadato.metadato.privato %}
+                                        <span style="color:grey">
+                                    {% else %}
+                                        <span class="">
+                                    {% endif %}
+                                        {{istanza_metadato.metadato.nome}}
+                                    </span>
+                                </td>   
+                                <td>
+                                    {% if istanza_metadato.metadato.tipo_metadato == "TEXT" %}
+                                        <b>{{istanza_metadato.valore_testo}}</b>
+                                    {% elif istanza_metadato.metadato.tipo_metadato == "STRING" %}
+                                        <b>{{istanza_metadato.valore_testo}}</b>    
+                                    {% elif istanza_metadato.metadato.tipo_metadato == "HTML" %}
+                                        <b>{{istanza_metadato.valore_testo}}</b>
+                                    {% elif istanza_metadato.metadato.tipo_metadato == "DATE" %}
+                                        <b>{{istanza_metadato.valore_data}}</b>
+                                    {% elif istanza_metadato.metadato.tipo_metadato == "IMAGE" and istanza_metadato.valore_image.url %}
+                                        <div>
+                                            <img src="{{istanza_metadato.valore_image.url}}" width="140px" height="140px" style="display:block"></img>            
+                                        </div>
+                                    {% elif istanza_metadato.metadato.tipo_metadato == "FILE" and istanza_metadato.valore_file.url %}
+                                        <a href="{{istanza_metadato.valore_file.url}}" target="_blank">{{istanza_metadato.valore_file.name}}</a>                
+                                    {% endif %} 
+                                </td>
+                            </tr>    
+                            {% endfor %}
+                </tbody>
+            </table>
+            </div>
+      <!--end card-->
+    </div>
+</div>
+{% endblock centered_container %}
+
+

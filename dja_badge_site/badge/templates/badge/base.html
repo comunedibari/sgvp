@@ -1,0 +1,316 @@
+<!-- Extends default Bootstrap Italia template -->
+{% extends 'bootstrap-italia-base.html' %}
+
+<!-- From app django-sass-processor -->
+{% load sass_tags %}
+
+{% load static %}
+
+<!-- Page Title -->
+{% block page_title %}
+Comune di Bari
+{% endblock page_title %}
+
+<!-- My custom scss sheet -->
+{% block extra_head %}
+<link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css" />
+<link rel="icon" href="{% static 'images/favicon.ico' %}">
+{% endblock extra_head %}
+
+
+<!-- URL link top left -->
+{% block header_slim_org_url %}
+https://www.comune.bari.it
+{% endblock header_slim_org_url %}
+
+<!-- Name top left -->
+{% block header_slim_org_name %}
+Comune di Bari
+{% endblock header_slim_org_name %}
+
+<!-- Mobile slim_org_name -->
+{% block header_slim_mobile_org_name %}
+Comune di Bari
+{% endblock header_slim_mobile_org_name %}
+
+<!-- Make empty areas -->
+{% block header_mobile_arrow %}{% endblock header_mobile_arrow %}
+{% block header_mobile_slim_menu %}{% endblock header_mobile_slim_menu %}
+
+<!-- Logo in Header -->
+{% block header_center_logo %}
+<img class="icon" src="{% static 'images/logo.png' %}" />
+{% endblock header_center_logo %}
+
+<!-- Url in Header -->
+{% block header_center_url %}
+/
+{% endblock header_center_url %}
+
+<!-- Organization name in Header -->
+{% block header_center_org_name %}
+Comune di Bari
+{% endblock header_center_org_name %}
+
+<!-- Organization description in Header -->
+{% block header_center_org_subname %}
+Verifica Pass
+{% endblock header_center_org_subname %}
+
+<!-- Language -->
+{% block header_slim_sub_menu %}
+{% endblock header_slim_sub_menu %}
+
+<!-- Login button in header -->
+{% block header_slim_buttons %}
+    {% if user.is_authenticated %}
+<div class="it-access-top-wrapper btn-group">
+    <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="visually-hidden">Utente autenticato</span>
+          <span>{% if user.get_full_name %}{{ user.get_full_name }}{% else %} {{ user.username}}{% endif %}</span>
+          <svg class="icon d-none d-lg-block">
+            <use href="{% static 'svg/sprites.svg' %}#it-expand"></use>
+          </svg>
+        </a>
+        <div class="dropdown-menu">
+          <div class="row">
+            <div class="col-12">
+              <div class="link-list-wrapper">
+                <ul class="link-list">
+                  <li><a class="dropdown-item list-item" href="#"  data-bs-toggle="modal" data-bs-target="#logout_popup"><span>Logout</span></a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+    {% else %}
+<div class="it-access-top-wrapper">
+    <a class="btn btn-primary btn-sm text-decoration-none" href="{% url 'login' %}" role="button">Accedi</a>
+</div>
+    {% endif %}
+<!-- Logout popup confirmation -->
+<div class="modal fade" tabindex="-1" role="dialog" id="logout_popup">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">SEI SICURO DI VOLER USCIRE?</h5>
+            </div>
+            <div class="modal-body">
+                <p>Effettuando il logout non avrai pi accesso alle funzionalità dell'area riservata.</p>
+                <p>Sicuro di voler continuare?</p>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Annulla</a>
+                <a class="btn btn-primary btn-sm" href="{% url 'logout'%}">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock header_slim_buttons %}
+
+<!-- Social and Search -->
+{% block header_center_right_zone %}
+{% endblock header_center_right_zone %}
+
+<!-- Menu principale in Header -->
+
+<!-- Logo in Footer -->
+{% block footer_logo %}
+<img class="icon" src="{% static 'images/logo.png' %}" />
+{% endblock footer_logo %}
+
+<!-- Url in Footer -->
+{% block footer_logo_url %}
+/
+{% endblock footer_logo_url %}
+
+<!-- Organization name in Footer -->
+{% block footer_org_name %}
+Comune di Bari
+{% endblock footer_org_name %}
+
+<!-- Organization name in Footer -->
+{% block footer_org_subname %}
+<!--<a href="/admin">Area Riservata - Verifica Pass</a>-->
+{% endblock footer_org_subname %}
+
+                    {% block footer_menu_section %}
+                    {% endblock footer_menu_section %}
+{% block footer_contacts_section %}
+<section class="py-4 border-white border-top">
+    <div class="row">
+        <div class="col-lg-4 col-md-4 pb-2">
+            <h4><a>Contatti</a></h4>
+            <p>
+                <strong>Comune di Bari</strong><br />Palazzo di Città<br />Corso Vittorio Emanuele II, 84<br />70122 - Bari
+            </p>
+            <p>
+                Codice Fiscale: 80015010723<br />Partita IVA: 00268080728
+            </p>
+            <div class="link-list-wrapper">
+                <ul class="footer-list link-list clearfix">
+                    <li><a class="list-item" href="https://indicepa.gov.it/ipa-portale/consultazione/domicilio-digitale/ricerca-domicili-digitali-ente/scheda-area-organizzativa-omogenea/A2C2844/scheda-ente/4063" target="_blank" title="Vai alla pagina: Posta Elettronica Certificata">Posta Elettronica Certificata</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-4 pb-2">
+            <!--
+            <h4><a>URP - Ufficio Relazioni con il Pubblico</a></h4>
+            <div class="link-list-wrapper">
+                <ul class="footer-list link-list clearfix">
+                    <li><a class="list-item" href="http://www.comune.bari.it/urp-centrale" target="_blank" title="Vai alla pagina: URP Centrale">URP Centrale</a></li>
+                    <li><a class="list-item" href="http://www.comune.bari.it/urp-carbonara" target="_blank" title="Vai alla pagina: URP Carbonara">URP Carbonara</a></li>
+                    <li><a class="list-item" href="http://www.comune.bari.it/urp-japigia" target="_blank" title="Vai alla pagina: URP Japigia">URP Japigia</a></li>
+                    <li><a class="list-item" href="http://www.comune.bari.it/urp-poggiofranco" target="_blank" title="Vai alla pagina: URP Poggiofranco">URP Poggiofranco</a></li>
+                    <li><a class="list-item" href="http://www.comune.bari.it/urp-san-paolo" target="_blank" title="Vai alla pagina: URP San Paolo">URP San Paolo</a></li>
+                    <li><a class="list-item" href="http://www.comune.bari.it/urp-servizi-demografici" target="_blank" title="Vai alla pagina: URP Demografici Centro">URP Demografici Centro</a></li>
+                    <li><a class="list-item" href="http://www.comune.bari.it/urp-carrassi" target="_blank" title="Vai alla pagina: URP Demografici Carrassi">URP Demografici Carrassi</a></li>
+                    <li><a class="list-item" href="http://www.comune.bari.it/urp-santo-spirito" target="_blank" title="Vai alla pagina: URP Demografici Santo Spirito">URP Demografici S. Spirito</a></li>
+                    <li><a class="list-item" href="http://www.comune.bari.it/urp-servizi-alla-persona" target="_blank" title="Vai alla pagina: URP Servizi alla Persona">URP Servizi alla Persona</a></li>
+                    <li><a class="list-item" href="http://www.comune.bari.it/urp-tributi" target="_blank" title="Vai alla pagina: URP Tributi">URP Tributi</a></li>
+                </ul>
+            </div>
+            -->
+        </div>
+        
+        <div class="col-lg-4 col-md-4 pb-2">
+            <div class="pb-2">
+                <h4><a>Seguici su</a></h4>
+                <ul class="list-inline text-left social">
+                    <li class="list-inline-item">
+                        <a class="p-2 text-white" href="http://www.facebook.com/comunedibari" target="_blank">
+                            <svg class="icon icon-sm icon-white align-top">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-facebook"></use>
+                            </svg><span class="sr-only">Facebook</span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="p-2 text-white" href="https://twitter.com/ComunediBari" target="_blank">
+                            <svg class="icon icon-sm icon-white align-top">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-twitter"></use>
+                            </svg><span class="sr-only">Twitter</span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="p-2 text-white" href="https://www.youtube.com/comunedibari" target="_blank">
+                            <svg class="icon icon-sm icon-white align-top">
+                                <use xlink:href="{% static 'svg/sprites.svg' %}#it-youtube"></use>
+                            </svg><span class="sr-only">Medium</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock footer_contacts_section %}
+
+<!-- blocco per riposizionare la pop_up di logout su body-->
+{% block bottom_scripts %}
+    <script>
+        document.getElementsByTagName('body')[0].append(document.getElementById('logout_popup'));
+    </script>
+    <script src="{% static 'js/activeNav.js' %}"></script>
+    <script src="{% static 'js/sortTable.js' %}"></script>
+    <script src="{% static 'js/loadingSpinner.js' %}"></script>
+{% endblock bottom_scripts %}
+
+{% block footer_bottom_content%}
+{% endblock footer_bottom_content%}
+
+<!-- Main menu sovrascritto perchè non funzionante in bootstrap italia il display del menu mobile-->
+{% block main_menu %}
+<div class="it-header-navbar-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="navbar navbar-expand-lg has-megamenu">
+                    <button class="custom-navbar-toggler" type="button" aria-controls="nav10" aria-expanded="false" aria-label="Toggle navigation" data-bs-target="#nav10" data-bs-toggle="navbarcollapsible">
+                        <svg class="icon">
+                            <use xlink:href="{% static 'svg/sprites.svg' %}#it-burger"></use>
+                        </svg>
+                    </button>
+                    <div class="navbar-collapsable" id="nav10">
+                        <div class="overlay"></div>
+                        <div class="close-div sr-only">
+                            <button class="btn close-menu" type="button"><span class="it-close"></span>close</button>
+                        </div>
+                        <div class="menu-wrapper">
+                            <ul class="navbar-nav">
+                                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><span>Home</span></a></li>
+                                {% if is_stf_or_su or is_gestore %}
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'lista_badge'%}" 
+                                        item-menuref="{% url 'lista_badge'%};" ><span>Gestione Pass</span></a></li>
+                                    {% if is_stf_or_su %}
+                                        <li class="nav-item dropdown ">
+                                            <a class="nav-link dropdown-toggle" href="#" item-menuref="{% url 'modellostampa-list'%};{% url 'serie-list'%}" data-bs-toggle="dropdown" aria-expanded="false" id="gestionemodelli">
+                                              <span>Gestione modelli</span>
+                                              <svg class="icon icon-xs">
+                                                <use href="{% static 'svg/sprites.svg' %}#it-expand"></use>
+                                              </svg>
+                                            </a>
+                                            <div class="dropdown-menu" role="region" aria-labelledby="gestionemodelli">
+                                              <div class="row">
+                                                <div class="col-12 col-lg-4">
+                                                  <div class="link-list-wrapper">
+                                                    <ul class="link-list">
+                                                      <li><a class="dropdown-item list-item" href="{% url 'modellostampa-list'%}"><span>Modelli stampa</span></a>
+                                                      </li>
+                                                      <li><a class="dropdown-item list-item" href="{% url 'serie-list'%}"><span>Serie</span></a>
+                                                      </li>
+                                                    </ul>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </li>
+                                        <li class="nav-item"><a class="nav-link" href="{% url 'admin:index'%}"><span>Accedi al Backoffice</span></a></li>
+                                    {% endif %}    
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"><span>Logout</span></a></li>
+                                {% elif user.is_authenticated %}    
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"><span>Logout</span></a></li>
+                                {% else %}
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><span>Area riservata</span></a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!--spinner -->
+<div class="op-loading" id="op-loading-node">
+    <div class="spinner-container">
+        <div class="progress-spinner progress-spinner-double progress-spinner-active">
+            <div class="progress-spinner-inner"></div>
+            <div class="progress-spinner-inner"></div>
+            <span class="visually-hidden">Caricamento...</span>
+        </div>
+        <div>Caricamento in corso...</div>
+    </div>
+</div>
+<!--end spinner -->
+{% endblock main_menu %}
+
+{% block centered_messages %}
+    {% for message in messages %}
+        <div class="mb-0 alert alert-{{ message.tags }}
+                {% if 'error' in message.tags%} alert-danger{% endif %}
+                {% if not forloop.first %}mt-1{% endif %}
+                alert-dismissible fade show"
+                role="alert">{{ message|safe }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Chiudi avviso">
+                <svg class="icon">
+                    <use href="/static/svg/sprites.svg#it-close"></use>
+                </svg>
+            </button>    
+        </div>
+    {% endfor %}
+{% endblock centered_messages %}
+

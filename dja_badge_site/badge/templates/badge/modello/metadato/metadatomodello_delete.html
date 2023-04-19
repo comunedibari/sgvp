@@ -1,0 +1,11 @@
+{% extends "badge/generic/item_delete.html" %}
+
+{% block descrizione_entita %}
+    {% include 'badge/includes/title.html' with titolo="Conferma eliminazione modello metadato:" %}
+    <br>
+    <h4>Attenzione</h4>
+    <p>confermi l'eliminazione del modello metadato:</p>
+    <p>Nome: <b>{{object.nome}}</b></p>
+    <p>Tipo: <b>{{object.get_tipo_metadato_display}}</b></p>
+{% endblock descrizione_entita %}
+

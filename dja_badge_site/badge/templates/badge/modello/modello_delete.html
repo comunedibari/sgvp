@@ -1,0 +1,12 @@
+{% extends "badge/generic/item_delete.html" %}
+
+
+{% block descrizione_entita %}
+  {% include 'badge/includes/title.html' with titolo="Conferma eliminazione Modello Stampa Pass" %}
+  <br>
+  <h4>Attenzione</h4>
+  <p>confermi l'eliminazione del modello stampa pass:</p>
+  <p>Nome template: <b>{{object.nome_template}}</b></p>
+  <p>Sfondo: <img  width="75px" src="{{ object.file_sfondo.url}}">{{object.file_sfondo.value }}</img></p>
+{% endblock descrizione_entita %}
+

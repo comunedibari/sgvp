@@ -1,0 +1,37 @@
+{% extends "badge/base.html" %}
+
+<!-- container Home -->
+{% block centered_container  %}
+{% include 'badge/includes/title.html' with titolo=nome_oggetto %}
+<div class="row p-3">
+    <div class="col-12 col-lg-12">
+      <!--start card-->
+            <br>
+            <form action="" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                {% include 'badge/includes/bs4_form.html' with form=form %}
+                <div class="d-grid gap-2 d-md-block text-center d-flex flex-column-reverse">
+                    <a class="btn btn-secondary btn-icon" role="button" href="{{url_successo}}">
+                        <span class="rounded-icon">
+                        <svg class="icon icon-secondary">
+                            <use href="/static/svg/sprites.svg#it-arrow-left"></use>
+                        </svg>
+                        </span>
+                        <span>{{titolo_back_button}}</span>
+                    </a>
+                    <button class="btn btn-primary btn-icon">
+                        <span class="rounded-icon">
+                        <svg class="icon icon-primary">
+                            <use href="/static/svg/sprites.svg#it-{% if is_create %}plus{% else %}check{% endif %}"></use>
+                        </svg>
+                        </span>
+                        <span>{% if is_create %}Crea{% else %}Salva{% endif %}</span>
+                    </button>
+                </div>
+            </form>
+      <!--end card-->
+    </div>
+</div>
+{% endblock centered_container  %}
+
+

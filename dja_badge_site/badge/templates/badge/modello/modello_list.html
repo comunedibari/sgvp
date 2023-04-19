@@ -1,0 +1,101 @@
+{% extends "badge/base.html" %}
+{% load widget_tweaks %}
+
+<!-- container Home -->
+{% block centered_container  %}
+{% include 'badge/includes/title.html' with titolo="Elenco Modelli stampa" %}
+<div class="accordion" id="collapseExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header " id="heading1c">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1c" aria-expanded="true" aria-controls="collapse1c">
+        Ricerca
+      </button>
+    </h2>
+    <div id="collapse1c" class="accordion-collapse collapse show" role="region" aria-labelledby="heading1c">
+      <div class="accordion-body">
+        <form method="get" class="">
+          <div class="row"> 
+            <div class="form-group col-md-10" style="margin-bottom:1rem!important;">
+              <label class="active" for="{{ filter.form.nome_template.auto_id }}">{{ filter.form.nome_template.label }}</label>
+              {% render_field filter.form.nome_template class+="form-control" %}
+            </div>  
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-primary btn-icon float-end" role="button">
+                <span class="rounded-icon">
+                <svg class="icon icon-primary">
+                    <use href="/static/svg/sprites.svg#it-search"></use>
+                </svg>
+                </span>
+                <span>Cerca</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="table-responsive"> 
+    <table class="table">
+      <thead>
+        <tr>
+        <th scope="col">NOME MODELLO</th>
+        <th scope="col">ANTEPRIMA</th>
+        <th scope="col">
+        </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for modello_stampa in page_obj %}
+          <tr>
+          <td>{{ modello_stampa.nome_template }}</td>
+          <td><span><a href="{{ modello_stampa.file_sfondo.url}}" target="_blank"><img width="75px" src="{{ modello_stampa.file_sfondo.url}}"></img></a><span></td>
+          <td>
+            <div class="float-end">
+              <a class="btn btn-outline-primary btn-xs" role="button" href="{% url 'modellostampa-update' pk=modello_stampa.id %}"
+              data-bs-toggle="tooltip" title="modifica modello">
+              <svg class="icon icon icon-primary icon-xs">
+                  <use href="/static/svg/sprites.svg#it-pencil"></use>
+              </svg></a>
+              <a class="btn btn-outline-primary btn-xs" role="button" href="{% url 'metadatomodello-list' pk=modello_stampa.id %}"
+                data-bs-toggle="tooltip" title="elenco metadati modello">
+                <svg class="icon icon icon-primary icon-xs">
+                    <use href="/static/svg/sprites.svg#it-burger"></use>
+                </svg></a>
+              <a class="btn btn-outline-danger btn-xs" role="button" href="{% url 'modellostampa-delete' pk=modello_stampa.id %}"
+                data-bs-toggle="tooltip" title="cancellazione modello">
+                <svg class="icon icon icon-danger icon-xs">
+                    <use href="/static/svg/sprites.svg#it-delete"></use>
+                </svg></a>
+            </div>  
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table> 
+</div>
+<!--paginazione-->
+{% if object_list %}
+{% include 'badge/includes/paginator.html' with page_obj=page_obj parameters=parameters %}
+{% endif %}  
+<div class="d-grid gap-2 d-md-block text-center pb-2 d-flex flex-column-reverse">
+  <a class="btn btn-secondary btn-icon" role="button" href="{% url 'home' %}">
+    <span class="rounded-icon">
+    <svg class="icon icon-secondary">
+      <use href="/static/svg/sprites.svg#it-arrow-left"></use>
+    </svg>
+    </span>
+    <span>Torna alla home</span>
+  </a>
+  <a class="btn btn-primary btn-icon" role="button" href="{% url 'modellostampa-add' %}">
+    <span class="rounded-icon">
+    <svg class="icon icon-primary">
+        <use href="/static/svg/sprites.svg#it-plus"></use>
+    </svg>
+    </span>
+    <span>Crea</span>
+    </a>
+</div>
+{% endblock centered_container  %}
+
+

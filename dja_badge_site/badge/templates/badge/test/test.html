@@ -1,0 +1,94 @@
+{% extends "badge/base.html" %}
+{% load widget_tweaks %}
+{% load static %}
+
+<!-- container Home -->
+{% block centered_container  %}
+{% include 'badge/includes/title.html' with titolo="test multifile upload" %}
+
+
+<form action="" enctype="multipart/form-data" method="post">
+    {% csrf_token %}
+        <input type="file" name="file_field_bs" id="file_field_bs" class="upload" multiple="multiple" accept=".pdf"/>
+        <label for="file_field_bs">
+          <svg class="icon icon-sm" aria-hidden="true"><use href="{% static 'svg/sprites.svg' %}#it-upload"></use></svg>
+          <span>Upload</span>
+        </label>
+        <ul class="upload-file-list" id="lista_file_bs">
+        </ul>
+    <input type="button" value="Invia" onClick="sendFile(event)">
+<br>---------------------------<br>
+</form>
+<script type="text/javascript">
+  var formData=new FormData();
+
+  function sendFile(event) {
+    const request = new XMLHttpRequest();
+    event.preventDefault();
+    let csfrtoken=document.querySelector('input[type=hidden][name=csrfmiddlewaretoken]');
+    formData.append("csrfmiddlewaretoken",csfrtoken.getAttribute('value'))
+    request.open("POST", "");
+    request.onload=()=>{
+      var file = window.URL.createObjectURL(this.response);
+      window.location.assign(file);
+    }
+    request.send(formData);
+  }
+
+   function humanFileSize(size) {
+    let i = size == 0 ? 0 : Math.floor(Math.log(size) / Math.log(1024));
+    return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
+  }
+
+    function removeMe(event){
+        console.log(event)
+        event.preventDefault();
+        let nodeToRemove=event.target;
+        let liNode=nodeToRemove.parentNode;
+        console.log("liNode {}",liNode)
+        while (liNode.nodeName!='LI'){
+          liNode=liNode.parentNode;
+          console.log("liNode in loop {}",liNode)
+        }
+        let itemId=liNode.getAttribute("my-file-id");
+        console.log("formdata delete item {}",itemId);
+        formData.delete(itemId);
+        console.log("formdata updated {}",formData);
+        liNode.parentNode.removeChild(liNode);
+        return false;
+    }
+
+    function nodo_file(newItemId,fileName,fileSize){
+        let li=document.createElement("li");
+        li.classList.add("upload-file");
+        li.classList.add("success");
+        li.setAttribute('my-file-id',newItemId)
+        li.style.cssText += 'max-width:500px;';
+        li.innerHTML=' <svg class="icon icon-sm" aria-hidden="true"><use href="/static/svg/sprites.svg#it-file"></use></svg>'+
+        '<p>'+
+          '<span class="visually-hidden">File caricato:</span>'+
+          fileName +' <span class="upload-file-weight">'+humanFileSize(fileSize)+'</span>'+
+        '</p>'+
+        '<button onClick="removeMe(event)">'+
+          '<span class="visually-hidden">Caricamento ultimato</span>'+
+          '<svg class="icon" aria-hidden="true"><use href="/static/svg/sprites.svg#it-close"></use></svg>'+
+        '</button>';
+        return li;
+    }
+
+    
+    const lista_file_bs=document.getElementById('lista_file_bs');
+    const fileInput=document.getElementById('file_field_bs');
+    document.getElementById('file_field_bs').onchange = function() {
+        for (const file of fileInput.files) {
+            console.log("file selezionato:{}",file)
+            let newItemId="file-" + [...formData.keys()].length;
+            formData.append(newItemId, file, file.name)
+            console.log("formData ",formData)
+            lista_file_bs.appendChild(nodo_file(newItemId,file.name,file.size))
+          }
+    };
+</script>
+{% endblock centered_container  %}
+
+

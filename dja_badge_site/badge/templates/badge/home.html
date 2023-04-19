@@ -1,0 +1,82 @@
+{% extends "badge/base.html" %}
+<!-- container Home -->
+{% block centered_container %}
+<div class="p-3" >
+            <h4>Portale di gestione e verifica Pass emessi dal Comune di BARI</h4>
+            <p>Il sistema permette di verificare l'autenticità dei Pass a partire dal QR code stampato sugli stessi, garantendo la visualizzazione dei contenuti pubblici e privati, in base alle autorizzazioni degli utenti utilizzatori.</p>
+            <p>Per verificare il Pass, inquadra il QR code e verrai rediretto alla pagina di dettaglio dei dati del Pass, i dati privati saranno visibili solo agli utenti con i ruoli opportuni.</p>
+            {% if is_stf_or_su or is_gestore %}
+                <div class="row ">
+                    <div class="col-md-4 text-center mb-1">
+                        <a class="btn btn-primary btn-icon btn-me" style="min-width:15em;" role="button" href="{% url 'new_badge'%}">
+                            <span class="rounded-icon">
+                            <svg class="icon icon-primary">
+                                <use href="/static/svg/sprites.svg#it-plus"></use>
+                            </svg>
+                            </span>
+                            <span>Genera nuovo Pass</span>
+                        </a>
+                    </div>
+                    <div class="col-md-4 text-center mb-1">
+                        <a class="btn btn-primary btn-icon btn-me" style="min-width:15em;" role="button" href="{% url 'lista_badge' %}">
+                            <span class="rounded-icon">
+                            <svg class="icon icon-primary">
+                                <use href="/static/svg/sprites.svg#it-more-items"></use>
+                            </svg>
+                            </span>
+                            <span>Gestione Pass</span>
+                        </a>
+                    </div>
+                    {% if is_stf_or_su %}
+                    <div class="col-md-4 text-center mb-1">
+                        <a class="btn btn-primary btn-icon btn-me" style="min-width:15em;" role="button" href="{% url 'admin:index' %}">
+                            <span class="rounded-icon">
+                            <svg class="icon icon-primary">
+                                <use href="/static/svg/sprites.svg#it-burger"></use>
+                            </svg>
+                            </span>
+                            <span>Accedi al Backoffice</span>
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            {%else%}  
+                {% if not user.is_authenticated %}
+                    <p>Per accedere alle funzionalità avanzate effettuare il <a href="{% url 'login' %}">login</a></p> 
+                {%else %} 
+                    {%if mySottoserie %}   
+                        <p>Risulti avere le seguenti abilitazioni:</p>
+                        <ul>
+                        {% for userserie in mySottoserie %}
+                            <li>
+                                {{userserie.get_ruolo_display}} - {{userserie.serie}}
+                            </li>
+                        {%endfor%}
+                        </ul>
+                    {%else%}
+                        <p class="fw-bold" style="font-size:1.5rem;"><b><u>ATTENZIONE</u></b><br>
+                        Non risultano abilitazioni sul tuo profilo, per ottenerle scrivi a 
+                            <a href="#" class="cryptedmail"
+                            data-name="privacy"
+                            data-domain="comune.bari"
+                            data-tld="it"
+                            onclick="window.location.href = 'mailto:' + this.dataset.name + '@' + this.dataset.domain + '.' + this.dataset.tld; return false;"></a>
+                        </p> 
+                    {%endif%}
+                {%endif%}
+            {%endif%} 
+            <br>
+            <p>
+                Per qualsiasi dubbio e/o osservazione scrivere al seguente indirizzo
+                <a href="#" class="cryptedmail"
+                   data-name="privacy"
+                   data-domain="comune.bari"
+                   data-tld="it"
+                   onclick="window.location.href = 'mailto:' + this.dataset.name + '@' + this.dataset.domain + '.' + this.dataset.tld; return false;"></a>
+            </p>
+
+</div>
+{% endblock centered_container %}
+
+
+

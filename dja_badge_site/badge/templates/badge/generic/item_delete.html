@@ -1,0 +1,60 @@
+{% extends "badge/base.html" %}
+
+<!-- container Home -->
+{% block centered_container  %}
+<div class="row p-3">
+    <div class="col-12 col-lg-12">
+      <!--start card-->
+            {% block descrizione_entita %}
+            {% with titolo="Conferma eliminazione "|add:nome_oggetto %}
+                {% include 'badge/includes/title.html' with titolo=titolo %}
+            {% endwith %}
+            <br>
+            <h4>Attenzione</h4>
+            <p>confermi l'eliminazione di {{nome_oggetto}} : {{identificatore_oggetto}}</p>
+            {% endblock descrizione_entita %}
+            <p>Di seguito tutte le entità collegate che verranno rimosse</p>
+            <table>
+                <tr>
+                  <th>Entità</th>
+                  <th>totali</th>
+                </tr>
+                {% for model_name, object_count in model_count %}
+                  <tr>
+                    <td>{{ model_name|capfirst }}</td>
+                    <td>{{ object_count }}</td>
+                  </tr>
+                {% endfor %}
+              </table>
+              <p>
+                <ul>
+                  {{ deletable_objects|unordered_list }}
+                </ul>
+              </p>
+            <form action="" method="post">
+                {% csrf_token %}
+              <div class="d-grid gap-2 d-md-block text-center d-flex flex-column-reverse">
+                <a class="btn btn-secondary btn-icon" role="button" href="{{url_successo}}">
+                  <span class="rounded-icon">
+                  <svg class="icon icon-secondary">
+                      <use href="/static/svg/sprites.svg#it-arrow-left"></use>
+                  </svg>
+                  </span>
+                  <span>Torna alla lista</span>
+                </a>
+                <button class="btn btn-danger btn-icon">
+                    <span class="rounded-icon">
+                    <svg class="icon icon-danger">
+                        <use href="/static/svg/sprites.svg#it-delete"></use>
+                    </svg>
+                    </span>
+                    <span>Elimina</span>
+                </button>
+              </div>
+            </form>
+      <!--end card-->
+    </div>
+</div>
+{% endblock centered_container  %}
+
+

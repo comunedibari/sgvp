@@ -1,0 +1,63 @@
+@media(max-width: 576px){
+    .mu-xs-2 {
+       padding-top: 8px !important;
+    }    
+}
+
+.cryptedmail:after {
+    content: attr(data-name) "@" attr(data-domain) "." attr(data-tld);
+}
+/*correzione su etichetta select rispetto al grigio di bootstrap-italia*/
+.select-wrapper label{
+    color:inherit
+}
+
+
+/* indicatori di direzione su ordinamento colonne tabella */
+/*doppia freccia ^v*/
+th[sortable="true"] span::after {
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='16'%3E%3Cpolygon points='5,0 0,7 10,7 5,0' fill='%23000000'/%3E %3Cpolygon points='0,9 10,9 5,16 0,9' fill='%23000000'/%3E %3C/svg%3E");
+    text-align: right;
+    float:right;
+}    
+
+/*freccia v*/
+th[sortable="true"] span[data-dir="asc"]::after {
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpolygon points='0, 0 10,0 5,10 10' fill='%23000000'/%3E%3C/svg%3E");
+    text-align: right;
+    float:right;
+}
+/*freccia ^*/  
+th[sortable="true"] span[data-dir="desc"]::after {
+    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10'%3E%3Cpolygon points='5 0,10 10,0 10' fill='%23000000'/%3E%3C/svg%3E");
+    text-align: right;
+    float:right;
+}
+
+/* spinner caricamento in corso...*/
+.op-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255,255,255,0.6);
+    border-radius: 5px;
+    z-index: 10000;
+}
+
+.op-loading .spinner-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -35px 0 0 -125px;
+    border-radius: 2rem;
+    background-color: #173546;
+    color: #fff;
+    padding: 8px;
+    box-shadow: 0 0 0 5px rgba(36, 72, 103, 0.2);
+    min-width: 250px;
+    /*min-height: 70px;*/
+    text-align: center;
+}
+/* end caricamento in corso...*/

@@ -1,0 +1,113 @@
+{% extends "badge/base.html" %}
+{% load widget_tweaks %}
+
+<!-- container Home -->
+{% block centered_container  %}
+{% include 'badge/includes/title.html' with titolo="Elenco Sottoserie" %}
+<div class="accordion" id="collapseExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header " id="heading1c">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1c" aria-expanded="true" aria-controls="collapse1c">
+        Ricerca
+      </button>
+    </h2>
+    <div id="collapse1c" class="accordion-collapse collapse show" role="region" aria-labelledby="heading1c">
+      <div class="accordion-body">
+        <form method="get" class="">
+          <div class="row"> 
+            <div class="form-group col-md-10" style="margin-bottom:1rem!important;">
+              <label class="active" for="{{ filter.form.nome.auto_id }}">{{ filter.form.nome.label }}</label>
+              {% render_field filter.form.nome class+="form-control" %}
+            </div>  
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-primary btn-icon float-end" role="button">
+                <span class="rounded-icon">
+                <svg class="icon icon-primary">
+                    <use href="/static/svg/sprites.svg#it-search"></use>
+                </svg>
+                </span>
+                <span>Cerca</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="table-responsive-md">
+  <table class="table">
+    <thead>
+      <tr>
+      <th scope="col">NOME</th>
+      <th scope="col">DESCRIZIONE</th>
+      <th scope="col">SERIE</th>
+      <th scope="col">DATA INIZIO VALIDITA</th>
+      <th scope="col">DATA FINE VALIDITA</th>
+      <th scope="col">
+      </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sottoserie in page_obj %}
+        <tr>
+        <td>{{ sottoserie.nome }}</td>
+        <td>{{ sottoserie.descrizione }}</td>
+        <td>{{ sottoserie.serie.nome }}</td>
+        <td>{{ sottoserie.data_inizio_validita }}</td>
+        <td>{{ sottoserie.data_fine_validita|default_if_none:"" }}</td>
+        <td>
+          <div class="float-end">
+            <a class="btn btn-outline-primary btn-xs" role="button" href="{% url 'sottoserie-update' pk_serie=sottoserie.serie.id pk=sottoserie.id %}"
+            data-bs-toggle="tooltip" title="modifica sottoserie">
+            <svg class="icon icon icon-primary icon-xs">
+                <use href="/static/svg/sprites.svg#it-pencil"></use>
+            </svg></a>
+            <a class="btn btn-outline-danger btn-xs" role="button" href="{% url 'sottoserie-delete' pk_serie=sottoserie.serie.id pk=sottoserie.id %}"
+              data-bs-toggle="tooltip" title="cancellazione sottoserie">
+              <svg class="icon icon icon-danger icon-xs">
+                  <use href="/static/svg/sprites.svg#it-delete"></use>
+              </svg></a>
+            <a class="btn btn-outline-danger btn-xs" role="button" href="{% url 'sottoserie-offusca' pk_serie=sottoserie.serie.id pk=sottoserie.id %}"
+              data-bs-toggle="tooltip" title="rimozione dati personali">
+              <svg class="icon icon icon-danger icon-xs">
+                  <use href="/static/svg/sprites.svg#it-error"></use>
+              </svg></a>    
+          </div>  
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table> 
+</div>
+<div class="row p-3">
+    <div class="col-12 col-lg-12">
+      <!--start card-->
+            <!--paginazione-->
+        {% if object_list %}
+          {% include 'badge/includes/paginator.html' with page_obj=page_obj parameters=parameters %}
+        {% endif %}  
+        <div class="d-grid gap-2 d-md-block text-center d-flex flex-column-reverse">
+          <a class="btn btn-secondary btn-icon" role="button" href="{% url 'serie-list' %}">
+            <span class="rounded-icon">
+            <svg class="icon icon-secondary">
+                <use href="/static/svg/sprites.svg#it-arrow-left"></use>
+            </svg>
+            </span>
+            <span>Torna alle serie</span>
+          </a>
+          <a class="btn btn-primary btn-icon" role="button" href="{% url 'sottoserie-add' pk_serie=pk_serie %}">
+            <span class="rounded-icon">
+            <svg class="icon icon-primary">
+                <use href="/static/svg/sprites.svg#it-plus"></use>
+            </svg>
+            </span>
+            <span>Crea</span>
+            </a>
+        </div>
+      <!--end card-->
+    </div>
+</div>
+{% endblock centered_container  %}
+
+

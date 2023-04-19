@@ -1,0 +1,39 @@
+{% extends "badge/base.html" %}
+
+<!-- container Home -->
+{% block centered_container  %}
+{%with titolo="PASS: "|add:metadatoObj.nome_badge|add:" - codice: "|add:metadatoObj.codice_badge %}
+  {% include 'badge/includes/title.html' with titolo=titolo %}
+{% endwith %}  
+<div class="row p-3">
+    <div class="col-12 col-lg-12">
+        <p>Metadato: <b>{{metadatoObj.nome}} </b></p>
+        <br>
+        <form method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {% include 'badge/includes/bs4_form.html' with form=form %}
+            <div class="d-grid gap-2 d-md-block text-center d-flex flex-column-reverse">
+              <a class="btn btn-secondary btn-icon btn-me" role="button" href="{{url_edit_badge}}">
+                <span class="rounded-icon">
+                <svg class="icon icon-secondary">
+                    <use href="/static/svg/sprites.svg#it-arrow-left"></use>
+                </svg>
+                </span>
+                <span>Torna al PASS</span>
+              </a>
+              <button type="submit" class="btn btn-primary btn-icon btn-me">
+                  <span class="rounded-icon">
+                  <svg class="icon icon-primary">
+                      <use href="/static/svg/sprites.svg#it-check"></use>
+                  </svg>
+                  </span>
+                  <span>Salva</span>
+              </button>
+          </div>
+        </form>
+      <!--end card-->
+    </div>
+</div>
+{% endblock centered_container  %}
+
+

@@ -1,0 +1,55 @@
+{% extends "badge/base.html" %}
+
+<!-- container Home -->
+{% block centered_container  %}
+{% include 'badge/includes/title.html' with titolo="Rimozione metadati sensibili" %}
+<div class="row p-3">
+    <div class="col-12 col-lg-12">
+      <!--start card-->
+              <h5>Attenzione, operazione irreversibile !!!</h5>
+              {%if badge %}
+                <p>Tipo Pass: &nbsp; <b>{{badge.sotto_serie.nome}}</b></p>
+                <p>Codice: &nbsp; <b>{{ badge.codice }}</b></p>
+                <p>Descrizione: &nbsp; <b>{{ badge.descrizione }}</b></p>
+                <p>I seguenti metadati del pass marcati come sensibili (GDPR) verranno rimossi !!!</p>
+              {% elif sottoseries %}
+                <p>L'operazione riguarderà le seguenti sotto serie:</p>
+                {% for sottoserie in sottoseries %}
+                  <p><b>{{sottoserie.descrizione}}</b></p>
+                {% endfor %}
+                <p>I seguenti metadati marcati come sensibili (GDPR) verranno rimossi su tutti i pass delle sotto serie!!!</p>
+              {% endif %}
+              <br>
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                <ul>
+                {%for metadato in metadati%}
+                  <li><b>{{metadato.nome}}</b> - ({{metadato.get_tipo_pvc_display}})</li>
+                {%endfor%}
+                </ul>
+                <div class="d-grid gap-2 d-md-block text-center d-flex flex-column-reverse">
+                   <a class="btn btn-secondary btn-icon"  role="button" href="{{url_indietro}}">
+                      <span class="rounded-icon">
+                      <svg class="icon icon-secondary">
+                          <use href="/static/svg/sprites.svg#it-arrow-left"></use>
+                      </svg>
+                      </span>
+                      <span>Indietro</span>
+                    </a>
+                    <button type="submit" class="btn btn-danger btn-icon" >
+                      <span class="rounded-icon">
+                      <svg class="icon icon-danger">
+                          <use href="/static/svg/sprites.svg#it-delete"></use>
+                      </svg>
+                      </span>
+                      <span>Elimina dati</span>
+                    </button>
+                    
+                </div>
+            </form>
+      <!--end card-->
+    </div>
+</div>
+{% endblock centered_container  %}
+
+

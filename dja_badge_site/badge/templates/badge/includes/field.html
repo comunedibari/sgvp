@@ -1,0 +1,19 @@
+{% load widget_tweaks %}
+{% if field.field.widget.input_type == "file" %}
+    {% with classe_totale='form-control '|add:class%}
+        {% render_field field class=classe_totale %}
+    {% endwith %}    
+{% elif field.field.widget.input_type == "checkbox" %}    
+    <div class="form-check">
+        {% render_field field %}
+        <label class="active" for="{{ field.auto_id }}">{{ field.label }}{%if field.field.required %}&nbsp;<span style="color:red">*</span>{%endif%}</label>
+    </div>
+{% elif field.field.widget.input_type == "select" %}    
+    <div class="select-wrapper">
+    {{ field }}
+    </div>
+{% else %}    
+    {% with classe_totale='form-control '|add:class%}
+        {% render_field field class=classe_totale %}
+    {% endwith %}
+{% endif %}

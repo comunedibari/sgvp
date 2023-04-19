@@ -1,0 +1,93 @@
+{% extends "badge/base.html" %}
+
+<!-- container Home -->
+{% block centered_container  %}
+{% include 'badge/includes/title.html' with titolo="Gestione PASS - Dati di dettaglio" %}
+<div class="row p-3">
+    <div class="col-12 col-lg-12">
+      <!--start card-->
+              <p>Tipo Pass: &nbsp; <b>{{badge.sotto_serie.nome}}</b></p>
+              <p>Codice: &nbsp; <b>{{ badge.codice }}</b></p>
+              <br>
+            <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                {% include 'badge/includes/bs4_form.html' with form=form %}
+                {% if metadati_notext %}  
+                  <h4 class="h4 pb-3">Metadati di tipo file o immagine</h3>
+                  {% for metadato_notext in metadati_notext %}
+                    <div class="form-group">
+                        <div class="input-group">
+                            <label class="active" for="input-group-{{metadato_notext.nome}}">{{ metadato_notext.nome }}</label>
+                            {% if metadato_notext.file_name %}
+                              {% if metadato_notext.tipo_metadato == 'IMAGE' %}
+                                <img src="{{metadato_notext.url}}" width="70" ></img>
+                              {% else %}  
+                                <div style="height:70px;"></div>
+                              {% endif %}  
+                              <a class="form-control" href="{{metadato_notext.url}}">{{ metadato_notext.file_name }}</a> 
+                            {% else %}  
+                              <div class="form-control">------</div>
+                            {% endif %}
+                            <div class="input-group-append">
+                                <a class="btn btn-secondary btn-icon btn-me" role="button" href="{{metadato_notext.url_edit}}">
+                                  <span class="rounded-icon">
+                                  <svg class="icon icon-primary">
+                                      <use href="/static/svg/sprites.svg#it-pencil"></use>
+                                  </svg>
+                                  </span>
+                                  <span></span>
+                                </a>
+                            </div>
+                          </div>
+                    </div>  
+                  {% endfor %}
+                {% endif %}  
+                <div class="d-grid gap-2 d-md-block text-center d-flex flex-column-reverse">
+                   <a class="btn btn-secondary btn-icon"  role="button" href="{% url 'lista_badge' %}">
+                      <span class="rounded-icon">
+                      <svg class="icon icon-secondary">
+                          <use href="/static/svg/sprites.svg#it-arrow-left"></use>
+                      </svg>
+                      </span>
+                      <span>Torna alla lista</span>
+                    </a>
+                    <a class="btn btn-outline-primary btn-icon"   role="button" href="{{url_download_badge}}" target="_blank">
+                      <span class="rounded-icon">
+                      <svg class="icon icon-primary">
+                          <use href="/static/svg/sprites.svg#it-download"></use>
+                      </svg>
+                      </span>
+                      <span>Download Pass</span>
+                    </a>
+                    <a class="btn btn-danger btn-icon"   role="button" href="{%url 'badge_offusca' badge_id=badge.pk %}" >
+                      <span class="rounded-icon">
+                      <svg class="icon icon-danger">
+                          <use href="/static/svg/sprites.svg#it-error"></use>
+                      </svg>
+                      </span>
+                      <span>Offusca dati privati</span>
+                    </a>
+                    <button type="submit" class="btn btn-primary btn-icon" name="submit" value="salva">
+                      <span class="rounded-icon">
+                      <svg class="icon icon-primary">
+                          <use href="/static/svg/sprites.svg#it-check"></use>
+                      </svg>
+                      </span>
+                      <span>Salva</span>
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-icon" name="submit" value="salva_e_torna">
+                      <span class="rounded-icon">
+                      <svg class="icon icon-primary">
+                          <use href="/static/svg/sprites.svg#it-check"></use>
+                      </svg>
+                      </span>
+                      <span>Salva e torna alla lista</span>
+                    </button>
+                </div>
+            </form>
+      <!--end card-->
+    </div>
+</div>
+{% endblock centered_container  %}
+
+

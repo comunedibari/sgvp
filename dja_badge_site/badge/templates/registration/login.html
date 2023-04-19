@@ -1,0 +1,95 @@
+{% extends "badge/base.html" %}
+
+{% load static %}
+
+{% block footer_org_subname %}
+    {% if user.is_authenticated %}
+        <a href="{% url 'login' %}"> </a>
+    {% endif %}
+{% endblock footer_org_subname %}
+
+{% block centered_container %}
+    {% if user.is_authenticated %}
+        <h4><a class="nav-link" href="{% url 'admin:index'%}"><span>Accedi all'Area Riservata</span></a></h4>
+    {% else %}
+        <div class="container">
+            <h3>Area riservata</h3>
+            <p>L'accesso all'area riservata ti consentirà di accedere alle funzionalità del portale.</p>
+            {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{field.label}} - {{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{field.label}} - {{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" class="user needs-validation" action="{% url 'login' %}">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-lg-6 form-div-style">
+                        <label for="username_login"><b>Username: </b></label>
+                        <br />
+                        <input type="text" class="" id="username_login" name="username" aria-describedby="emailHelp" placeholder="" maxlength="100" />
+                        {% for error in form.username.errors %}
+                            <div class="validation-error">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-lg-6 form-div-style">
+                        <label for="password_login"><b>Password: </b></label>
+                        <input type="password" class="" id="password_login" name="password" placeholder="" maxlength="50" />
+                        {% for error in form.password.errors %}
+                            <div class="validation-error">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <br />
+                <div class="d-grid gap-2 d-md-block text-center d-flex flex-column-reverse">
+                    <a href="{% url 'home' %}" class="btn btn-secondary btn-user btn-block">Torna alla home</a>
+                    <button class="btn btn-primary btn-icon" type="submit" value="Login">
+                        <span class="rounded-icon">
+                        <svg class="icon icon-primary">
+                            <use href="/static/svg/sprites.svg#it-arrow-right-circle"></use>
+                        </svg>
+                        </span>
+                        <span>Login</span>
+                    </button>
+                    <!--<input type="submit" class="btn btn-primary btn-user btn-block" value="Login" />-->
+                    <input type="hidden" name="next" value="{{ next }}" />
+                </div>
+                <!--<div class="row">
+                    <div class="col-md-6 form-div-style text-center mb-1">
+                        <a href="{% url 'home' %}" class="btn btn-secondary btn-user btn-block">Torna alla home</a>
+                    </div>
+                    <div class="col-md-6 form-div-style text-center mb-1">
+                        <input type="submit" class="btn btn-primary btn-user btn-block" value="Login" />
+                        <input type="hidden" name="next" value="{{ next }}" />
+                    </div>
+                </div>-->
+            </form>
+
+            <hr />
+
+            <!--<p>Hai dimenticato la password? Clicca <a class="" href="{% url 'password_reset' %}">qui</a> per recuperarla.</p>-->
+            <p>
+                Per qualsiasi dubbio e/o osservazione scrivere al seguente indirizzo
+                <a href="#" class="cryptedmail"
+                   data-name="privacy"
+                   data-domain="comune.bari"
+                   data-tld="it"
+                   onclick="window.location.href = 'mailto:' + this.dataset.name + '@' + this.dataset.domain + '.' + this.dataset.tld; return false;"></a>
+            </p>
+
+        </div>
+    {% endif %}
+{% endblock %}
