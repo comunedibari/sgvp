@@ -8,7 +8,7 @@ from django.contrib.auth.models import Group
 from .views import viewspass
 
 
-from .models import Serie, UserSeries
+from .models import ApiKey, Serie, UserSeries
 from .models import SottoSerie
 from .models import ModelloStampaBadge
 from .models import MetadatoModelloBadge
@@ -131,3 +131,10 @@ class UserSeriesAdmin(admin.ModelAdmin):
     list_filter = ('user','serie',)
     
 admin_site.register(UserSeries,UserSeriesAdmin)
+
+
+class ApiKeyAdmin(admin.ModelAdmin):
+    list_display = ('sotto_serie', 'key', 'data_inizio_validita', 'data_fine_validita')
+    list_filter = ('sotto_serie',)
+    
+admin_site.register(ApiKey,ApiKeyAdmin)

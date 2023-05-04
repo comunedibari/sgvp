@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import viewspass,viewsmodello,viewsmetadatomodello,viewsserie,viewssottoserie,viewstest
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     # pubblica
@@ -46,6 +47,8 @@ urlpatterns = [
     path('serie/<int:pk_serie>/sottoserie/<int:pk>', viewssottoserie.SottoSerieUpdateView.as_view(), name='sottoserie-update'),
     path('serie/<int:pk_serie>/sottoserie/<int:pk>/delete', viewssottoserie.SottoSerieDeleteView.as_view(), name='sottoserie-delete'),
     path('serie/<int:pk_serie>/sottoserie/<int:pk>/offusca', viewssottoserie.offusca, name='sottoserie-offusca'),
+    #api 
+    path('api/pass/metadato', csrf_exempt(viewspass.badge_metadato_api), name='badge_metadato_api'),
     
     # test
     path('multiple_file_upload_test', viewstest.multiple_file_upload, name='multiple_file_upload_test'),

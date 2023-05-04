@@ -213,15 +213,6 @@ def hook_post_save_metadato_modello(sender, **kwargs):
     created:MetadatoModelloBadge=kwargs['created']
     if created:
         crea_metadati(instance)        
-#
-#@receiver(pre_save, sender=MetadatoBadge)
-#def hook_post_save_metadato_pass(sender, **kwargs):
-#    instance:MetadatoBadge=kwargs['instance']
-#    created:MetadatoBadge=kwargs['created']
-#    update_fields=kwargs['update_fields']
-#    if not created and ('valore_file' in update_fields):
-#        if instance in instance.metadato.tipo_metadato in [MetadatoModelloBadge.TP_FILE]:
-#            
 
 # relazione tra utente e Serie e relativo ruolo (gestore o checker)
 class UserSeries(models.Model):
@@ -299,3 +290,15 @@ def offusca_dati_personali_sottoserie(sottoserie_obj:SottoSerie):
     pass_list=Badge.objects.filter(sotto_serie__id=sottoserie_obj.id)
     for passObj in pass_list:
         offusca_dati_personali(passObj)        
+        
+class ApiKey(models.Model):
+    sotto_serie = models.ForeignKey(SottoSerie, on_delete=models.CASCADE,null=False)   
+    key = models.CharField(max_length=255,help_text="key")
+    data_inizio_validita = models.DateField(null=False, help_text="data inizio validità")
+    data_fine_validita = models.DateField(null=True,blank=True,help_text="data fine validità") 
+    #creazione dell'indice univoco tra serie e key
+    class Meta:
+        unique_together = ('sotto_serie', 'key')
+    def __str__(self) -> str:
+        return self.sotto_serie.nome
+        

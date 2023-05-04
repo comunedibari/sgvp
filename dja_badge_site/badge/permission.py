@@ -1,7 +1,7 @@
 from datetime import date
 from django.http import HttpRequest
 
-from .models import Serie, SottoSerie, UserSeries
+from .models import ApiKey, Serie, SottoSerie, UserSeries
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import UserPassesTestMixin,LoginRequiredMixin
@@ -111,3 +111,20 @@ class BaseStaffOrSuperuserView(LoginRequiredMixin, UserPassesTestMixin):
             return True
         else:
             return False
+
+def has_key_valid(key,sotto_serie_id):
+    """true se la key esiste sulla sotto_serie ed è valida ad oggi
+
+    Args:
+        key (_type_): _description_
+        sotto_serie_id (_type_): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    qs=ApiKey.objects\
+            .filter(sotto_serie__id=sotto_serie_id,key=key)\
+            .filter(data_inizio_validita__lte=date.today())\
+            .filter(Q(data_fine_validita__isnull=True)|Q(data_fine_validita__gte=date.today())) 
+    return len(qs)>0
+        

@@ -1,26 +1,28 @@
 import datetime
+from django.core.exceptions import BadRequest
 import io
 import os
 from django.contrib import messages
 import uuid
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponseForbidden, JsonResponse,HttpResponseBadRequest,HttpResponseNotFound
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.urls import reverse
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 from reportlab.lib.units import mm
-from ..permission import has_role, has_role_on_serie, is_gestore, is_staff_or_superuser, user_in_request,  user_roles, user_sotto_series
+from ..permission import has_key_valid, has_role, has_role_on_serie, is_gestore, is_staff_or_superuser, user_in_request,  user_roles, user_sotto_series
 from badge.views.utils import add_role
 from ..filter import BadgeFilter
 from ..utils import build_image_w_text, genera_qrcode
 from ..forms import BadgeEditForm, BadgeNewForm,  MetadatoBadgeForm
-from ..models import Badge, MetadatoModelloBadge,Serie,SottoSerie,MetadatoBadge,ModelloStampaBadge, UserSeries, offusca_dati_personali
+from ..models import ApiKey, Badge, MetadatoModelloBadge,Serie,SottoSerie,MetadatoBadge,ModelloStampaBadge, UserSeries, offusca_dati_personali
 from django.contrib.auth.decorators import user_passes_test
 from django.views.generic.list import ListView
 from django.utils.text import slugify
 from django.contrib.auth.mixins import UserPassesTestMixin,LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+import json
 
 # Create your views here.
 
@@ -462,3 +464,55 @@ def badge_offusca(request,badge_id:uuid):
                    'url_indietro':reverse('badge_edit',kwargs={'badge_id':badgeObj.id}),
                    'metadati':metadati,
                    })        
+
+def badge_metadato_api(request):
+    """endpoint per aggiornare il metadato di un badge (solo metadati TESTO STRINGA E DATA)
+
+    Args:
+        request (_type_): json {api_key,sotto_serie_id,badge_des,metadato_nome,metadato_valore}
+
+    Raises:
+        PermissionDenied: _description_
+        BadRequest: _description_
+        BadRequest: _description_
+        BadRequest: _description_
+
+    Returns:
+        _type_: _description_
+    """
+    if request.method == 'POST':
+        json_data = json.loads(request.body) 
+        try:
+            api_key = json_data['api_key']
+            sotto_serie_id = json_data['sotto_serie_id']
+            badge_des = json_data['badge_des']
+            metadato_nome = json_data['metadato_nome']
+            metadato_valore = json_data['metadato_valore']
+            #verifico che la abbia accesso:
+            if not has_key_valid(key=api_key,sotto_serie_id=sotto_serie_id):
+                return HttpResponseForbidden('Chiave mancante o errata !!!')        
+            badges_to_update=Badge.objects.filter(sotto_serie__id=sotto_serie_id,descrizione=badge_des)
+            metadati_updated=0
+            for badge in badges_to_update:
+                metadati=MetadatoBadge.objects.filter(badge=badge,metadato__nome=metadato_nome)
+                for metadato in metadati:
+                    if metadato.metadato.tipo_metadato==MetadatoModelloBadge.TP_STRING or metadato.metadato.tipo_metadato==MetadatoModelloBadge.TP_TEXT:
+                        metadato.valore_testo=metadato_valore
+                        metadato.save()
+                        metadati_updated=metadati_updated+1
+                    elif metadato.metadato.tipo_metadato==MetadatoModelloBadge.TP_DATE:
+                        metadato.valore_data=metadato_valore
+                        metadato.save()
+                        metadati_updated=metadati_updated+1
+                    else:
+                        return HttpResponseBadRequest('Metadato di tipo non aggiornabile')            
+            if metadati_updated>0:
+                return JsonResponse({'status':'OK','messaggio':'Metadati aggiornati: '+str(metadati_updated)})
+            else:
+                return HttpResponseNotFound('Nessun metadato trovato !!!')            
+        except KeyError:
+            return HttpResponseBadRequest('Richiesta errata')            
+    else:
+        return HttpResponseBadRequest('Metodo errato')            
+    
+
