@@ -37,7 +37,7 @@ def badge_detail_by_id(request,badge_id:uuid):
     serieObj = Serie.objects.get(pk=sottoSerieObj.serie.id)
     modelloStampaBadgeObj = ModelloStampaBadge.objects.get(pk=sottoSerieObj.modello_stampa_badge.id)
     #filtro i metadati privati 
-    has_bvr=has_role_on_serie(request,serie=badgeObj.sotto_serie.serie,roles=[UserSeries.TP_CHECKER])
+    has_bvr=has_role_on_serie(request,serie=badgeObj.sotto_serie.serie,roles=[UserSeries.TP_CHECKER,UserSeries.TP_GESTORE])
     if has_bvr:
         metadati = MetadatoBadge.objects.filter(badge__id=badge_id)
     else:
