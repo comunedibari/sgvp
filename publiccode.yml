@@ -3,7 +3,6 @@
 # More info at https://github.com/italia/publiccode.yml
 
 publiccodeYmlVersion: '0.2'
-applicationSuite: SGVP Gestione e Verifica Pass
 categories:
   - document-management
   - event-management
@@ -23,59 +22,82 @@ description:
     localisedName: SGVP Gestione e Verifica Pass
     longDescription: |
       Il sistema nasce dalla necessità di gestire tramite un portale i pass
+
       emessi dall'ente comune utilizzati per il riconoscimento:
+
 
 
       - dei veicoli dell’autoparco
 
+
       - degli operatori dello staff nominato in caso di eventi gestiti dall'ente
 
 
+
       I Pass generati dal SGVP sono riproducibili su supporto cartaceo ed
+
       espongono un QR Code che contiene l’url sul dominio certificato su cui
+
       vengono pubblicati i dati relativi al Pass.
 
 
+
       Il sistema è estremamente flessibile nella definizione del set di dati da
+
       associare al Pass, e nella configurazione di stampa dello stesso. 
 
 
+
       Ogni pass è basato sul censimento di un modello sul quale è possibile
+
       definire un numero illimitato di metadati, ogni metadato ha una tipologia
+
       tra:
+
 
 
       - Stringa
 
+
       - Testo
+
 
       - Data
 
+
       - File
 
+
       - Immagine
+
 
 
       e attributi come:
 
 
+
       - privato
 
+
       - stampabile
+
 
       - obbligatorio
 
 
+
       L'url codificato nel QR code è parametrizzato in una variabile di
+
       environment con il placeholder {badge\_id} che indica l'uuid che
+
       identifica il Pass.
+    screenshots:
+      - |-
+        https://raw.githubusercontent.com/comunedibari/sgvp/master/screenshots/verifica_pass.png
     shortDescription: 'Sistema di Gestione e Verifica dei Pass '
 developmentStatus: stable
-intendedAudience:
-  countries:
-    - it
-  scope:
-    - local-authorities
+inputTypes:
+  - application/x.empty
 it:
   conforme:
     gdpr: true
@@ -90,7 +112,6 @@ it:
     spid: false
   riuso:
     codiceIPA: c_a662
-landingURL: 'https://verificapass.comune.bari.it'
 legal:
   license: EUPL-1.2
   mainCopyrightOwner: Comune di Bari
@@ -99,6 +120,8 @@ localisation:
   availableLanguages:
     - it
   localisationReady: false
+logo: |-
+  https://raw.githubusercontent.com/comunedibari/sgvp/master/screenshots/verifica_pass.png
 maintenance:
   contacts:
     - email: adriano.colaianni@comune.bari.it
@@ -109,6 +132,8 @@ maintenance:
       name: Vito Ciocia
   type: internal
 name: SGVP Gestione e Verifica Pass
+outputTypes:
+  - application/x.empty
 platforms:
   - web
 releaseDate: '2023-03-15'
@@ -117,3 +142,10 @@ softwareVersion: '1.0'
 url: 'https://github.com/comunedibari/sgvp.git'
 usedBy:
   - Comune di Bari
+applicationSuite: SGVP Gestione e Verifica Pass
+intendedAudience:
+  countries:
+    - it
+  scope:
+    - local-authorities
+landingURL: 'https://verificapass.comune.bari.it'
