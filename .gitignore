@@ -8,6 +8,5 @@ dja_badge_site/file_sfondo/**
 dja_badge_site/media/*
 dja_badge_site/dbdevel.sqlite3
 prod.env
-requirements.txt
 restart.sh
 dja_badge_site/db.sqlite3
