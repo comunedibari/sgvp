@@ -14,7 +14,10 @@ from .models import ModelloStampaBadge
 from .models import MetadatoModelloBadge
 from .models import Badge
 from .models import MetadatoBadge
+from vcard.models import VCard
+
 from csvexport.actions import csvexport
+
 
 
 class CustomAdminSite(admin.AdminSite):
@@ -138,3 +141,38 @@ class ApiKeyAdmin(admin.ModelAdmin):
     list_filter = ('sotto_serie',)
     
 admin_site.register(ApiKey,ApiKeyAdmin)
+
+# Creo sezione admin anche per app vcard
+class VCardAdmin(admin.ModelAdmin):
+    
+    # Specifica i campi che vuoi visualizzare nella lista dell'amministratore
+    list_display = ('nome', 'cognome', 'profilo', 'ufficio', 'telefono_fisso', 'telefono_cellulare', 'email')
+    
+    # Aggiungi un filtro per i campi più usati
+    list_filter = ('profilo', 'ufficio')
+    
+    # Aggiungi un'opzione di ricerca basata su nome e cognome
+    search_fields = ('nome', 'cognome', 'profilo', 'ufficio', 'email')
+    
+    # Permetti di filtrare e modificare i contatti per indirizzo
+    ordering = ('cognome', 'nome')
+
+    # Definisci una formattazione personalizzata per il dettaglio
+    fieldsets = (
+        (None, {
+            'fields': ('uuid', 'titolo', 'nome', 'cognome', 'profilo', 'ufficio', 'indirizzo_ufficio')
+        }),
+        ('Contatti', {
+            'fields': ('telefono_fisso', 'telefono_cellulare', 'email')
+        }),
+        ('Altro', {
+            'fields': ('effetto_neve', 'effetto_epifania')
+        }),
+    )
+
+    readonly_fields = ('uuid',)
+
+    # Aggiungi un'opzione per il numero massimo di elementi per pagina
+    list_per_page = 20
+
+admin_site.register(VCard, VCardAdmin)

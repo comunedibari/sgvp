@@ -1,0 +1,54 @@
+/* Contenitore principale */
+#befana-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Non interferisce con i click */
+    z-index: 9999; /* Sempre visibile sopra gli altri elementi */
+}
+
+/* Stile della Befana */
+.befana {
+    position: absolute;
+    width: 100px; /* Dimensione della Befana */
+    height: auto;
+    animation: fly-across 5s linear infinite;
+    transform: scaleX(1); /* Default verso destra */
+}
+
+/* Animazione che va da sinistra a destra */
+@keyframes fly-across {
+    0% {
+        left: -150px;
+        top: 50%;
+    }
+    50% {
+        top: 30%;
+    }
+    100% {
+        left: 100%;
+        top: 50%;
+    }
+}
+
+/* Per volare da destra a sinistra */
+.befana.reverse {
+    transform: scaleX(-1); /* Specchia la Befana verso sinistra */
+    animation: fly-back 5s linear infinite;
+}
+
+@keyframes fly-back {
+    0% {
+        left: 100%;
+        top: 50%;
+    }
+    50% {
+        top: 70%;
+    }
+    100% {
+        left: -150px;
+        top: 50%;
+    }
+}

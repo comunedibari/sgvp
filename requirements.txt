@@ -4,7 +4,7 @@ autopep8==2.0.1
 colorama==0.4.6
 design-django-theme==2.0.9
 dj-database-url==1.2.0
-Django==4.1.7
+Django==4.2.26
 django-admin-csvexport==2.0
 django-appconf==1.0.5
 django-compressor==4.3.1
@@ -14,13 +14,13 @@ django-sass-processor==1.2.2
 django-widget-tweaks==1.4.12
 ldap3==2.9.1
 libsass==0.22.0
-Pillow==9.4.0
+Pillow
 pyasn1==0.4.8
 pycodestyle==2.10.0
 pypng==0.20220715.0
 qrcode==7.4.2
 rcssmin==1.1.1
-reportlab==3.6.12
+reportlab
 rjsmin==1.2.1
 six==1.16.0
 sqlparse==0.4.3

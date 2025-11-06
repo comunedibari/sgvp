@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.forms',
     'django_filters',
     'django_python3_ldap',
+    'vcard.apps.VcardConfig',
 ]
 
 MIDDLEWARE = [
@@ -88,6 +89,9 @@ WSGI_APPLICATION = 'dja_badge_site.wsgi.application'
 # Update database configuration from $DATABASE_URL.
 import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=500)
+
+print("DB from env: ")
+print(db_from_env)
 
 DATABASES = {
     'default': {

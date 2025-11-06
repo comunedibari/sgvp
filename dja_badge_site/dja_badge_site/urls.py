@@ -24,6 +24,7 @@ admin.autodiscover()
 urlpatterns = [
     path('admin/', admin_site.urls),
     path('pass/', include('badge.urls')),
+    path('vcard/', include('vcard.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('', RedirectView.as_view(url='pass/', permanent=True)),
     path('media/', include('badge.urlsmedia'))

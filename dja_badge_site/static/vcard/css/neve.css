@@ -1,0 +1,14 @@
+.snowflake {
+    position: fixed;
+    top: 0;
+    color: #87CEEB; /* Colore azzurro chiaro */
+    text-shadow: 0 0 4px #FFFFFF, 0 0 6px #87CEEB; /* Effetto bagliore */
+    animation: fall linear infinite;
+    pointer-events: none; /* Evita che i fiocchi interferiscano con clic */
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
+}
