@@ -9,13 +9,13 @@ django-admin-csvexport==2.0
 django-appconf==1.0.5
 django-compressor==4.3.1
 django-filter==22.1
-django-python3-ldap==0.15.4
+django-python3-ldap==0.16.1
 django-sass-processor==1.2.2
 django-widget-tweaks==1.4.12
 ldap3==2.9.1
 libsass==0.22.0
 Pillow==9.4.0
-pyasn1==0.4.8
+pyasn1==0.6.3
 pycodestyle==2.10.0
 pypng==0.20220715.0
 qrcode==7.4.2
