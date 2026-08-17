@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# script per avvio gunicorn con virtualenv attivo su VM Linux Ubuntu 20.04 LTS
 NAME="djabadge"                                   # Name of the application
 DJANGODIR=/home/user/dja-badge/dja_badge_site     # Django project directory
 SOCKFILE=/run/djabadge.sock       # we will communicte using this unix socket

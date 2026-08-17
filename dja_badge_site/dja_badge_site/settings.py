@@ -139,14 +139,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
-#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+#
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfilescollected')  # directory dove vengono raccolti i file statici con comando collectstatic
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#serve ad indicare che i file statici manipolati per lo sviluppo si trovano in questa directory, poi con il collectstatic vengono riversati tutti in STATIC_ROOT
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]

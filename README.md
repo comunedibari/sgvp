@@ -33,9 +33,9 @@ Tra le funzionalità principali del sistema:
 L'url codificato nel QR code è parametrizzato in una variabile di environment con il placeholder {badge_id} che indica l'uuid che identifica il Pass.
 
 SGVP è realizzato con le seguenti tecnologie:
-- django framework versione 4.1.7 (framework python per lo sviluppo di portali web basato su pattern MVC)
-- DBMS: PostgreSQL versione 12, oppure SQLite 
-- Bootstrap Italia versione 2.0.9 (integrato nel pacchetto python django-design-theme:2.0.9)
+- django framework versione 6.1 (framework python per lo sviluppo di portali web basato su pattern MVC)
+- DBMS: PostgreSQL versione 18, oppure SQLite 
+- Bootstrap Italia versione 2 (integrato nel pacchetto python django-design-theme:2.18.1)
 - Altre librerie python per gestione dei PDF e miglioramento del rendering frontend (la lista completa è nel file requirements.txt)
 
 ## Struttura del repository
@@ -49,11 +49,14 @@ SGVP è realizzato con le seguenti tecnologie:
 │   activate_venv.bat         --script per avviare i venv in sistemi Windows
 │   activate_venv.sh          --script per avviare i venv in bash  
 │   gunicorn_start            --script di esempio di avvio gunicorn in ambiente Linux
-└   requirements.txt          --elenco dipendenze python
+│   docker                    --Cartella con file di build immagine per web application esposta da gunicorn e 
+│                               file docker-compose.yml per avviare anche container del DB
+│   requirements-dev.txt      --elenco dipendenze python in ambiente di sviluppo
+└   requirements.txt          --elenco dipendenze python in produzione
 
 ```
 ## Prerequisiti
-Ambiente python >= 3
+Ambiente python >= 3.14
 
 ## Installazione
 - installazione dell'ambiente python >=3 [Python getting started](https://www.python.org/about/gettingstarted/)
@@ -65,7 +68,7 @@ Ambiente python >= 3
     in caso di sistema operativo linux lanciare:
     `source ./.venv/bin/activate`
 - Installazione delle dipendenze di progetto:
-`python -m pip install -r requirements.txt`
+`python -m pip install -r requirements-dev.txt`
 - Installazione del DMBS PostgreSQL (fare riferimento alla documentazione ufficiale)
 - Se si sceglie di utilizzare PostgreSQL:
     - Creazione dell’utenza per l’accesso al DB es: 
@@ -96,7 +99,10 @@ export DJANGO_SECRET_KEY DJANGO_DEBUG DATABASE_URL ALLOWED_HOSTS ORIGIN_URL_PASS
     `python manage.py migrate`
 - Creare l’utente superuser: 
     `python manage.py createsuperuser`
+- Lanciare il collectstatic: 
+    `python manage.py collectstatic`
 - Per avviare il server lanciare `python manage.py runserver`, ol portale è disponibile all’url `http://localhost:8000/`
+
 
 ## Status del progetto
 Il progetto è in versione stabile

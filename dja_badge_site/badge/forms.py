@@ -24,8 +24,9 @@ class BadgeNewForm(forms.Form):
                 #queryset=SottoSerie.objects.filter(serie__user_series__user__username=username,serie__user_series__ruolo=UserSeries.TP_GESTORE),
                 queryset=user_sotto_series(user=user,roles=[UserSeries.TP_GESTORE],valid_now=True),
                 required=True,
-                label="Tipo Pass")
-    sotto_serie = forms.ModelChoiceField(queryset=SottoSerie.objects.all(),required=True,label="Tipo Pass")
+                label="Tipo Pass",
+                empty_label="- Seleziona un'opzione -")
+    sotto_serie = forms.ModelChoiceField(queryset=SottoSerie.objects.all(),required=True,label="Tipo Pass",empty_label="- Seleziona un'opzione -")
     descrizione = forms.CharField(label='Descrizione Pass', max_length=80,required=True)
     data_inizio_validita = forms.DateField(label='Data inizio validità', required=True
                                            ,widget=BootstrapItaliaDateWidget())

@@ -1,0 +1,40 @@
+version: '3.1'
+
+services:
+  web:
+    image: dja-badge:latest
+    container_name: dja-badge
+    ports:
+      - "127.0.0.1:8095:8000"
+    volumes:
+      - ./media:/app/media
+      - ./staticfilescollected:/app/staticfilescollected
+    env_file:
+      - .env
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             gunicorn --bind 0.0.0.0:8000 --workers 4 dja_badge_site.wsgi:application"
+    networks:
+      - dja-badge-network
+
+  db-djabadge-pg18:
+    image: postgres:18
+    container_name: dja-badge-postgres
+    restart: unless-stopped
+    env_file:
+      - .env.db
+    volumes:
+      - ./pg_data:/var/lib/postgresql
+    networks:
+      - dja-badge-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  dja-badge-network:
+    driver: bridge
+

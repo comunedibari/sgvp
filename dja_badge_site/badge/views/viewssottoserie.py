@@ -25,6 +25,10 @@ class SottoSerieForm(forms.ModelForm):
             'data_inizio_validita': BootstrapItaliaDateWidget(),
             'data_fine_validita': BootstrapItaliaDateWidget(),
         }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['modello_stampa_badge'].empty_label = "- Seleziona un'opzione -"
 
 class SottoSerieCreateView(SuccessMessageMixin,BaseStaffOrSuperuserView,CreateView):
     model = SottoSerie

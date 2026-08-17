@@ -10,7 +10,7 @@
     </div>
 {% elif field.field.widget.input_type == "select" %}    
     <div class="select-wrapper">
-    {{ field }}
+        {{ field }}    
     </div>
 {% else %}    
     {% with classe_totale='form-control '|add:class%}

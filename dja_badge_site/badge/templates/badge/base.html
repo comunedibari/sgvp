@@ -104,7 +104,12 @@ Verifica Pass
             </div>
             <div class="modal-footer">
                 <a class="btn btn-secondary btn-sm" type="button" data-bs-dismiss="modal">Annulla</a>
-                <a class="btn btn-primary btn-sm" href="{% url 'logout'%}">Logout</a>
+                <form method="POST" action="{% url 'logout'%}" style="display:inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        Logout
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -214,6 +219,26 @@ Comune di Bari
     <script>
         document.getElementsByTagName('body')[0].append(document.getElementById('logout_popup'));
     </script>
+<!-- blocco per effettuare POST al posto di GET per logout -->
+    <script>
+    document.getElementById('logout-link').addEventListener('click', async function (event) {
+        event.preventDefault();
+        const body = new URLSearchParams({
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+        });
+        const response=await fetch(this.href, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: body
+        });
+        if (response.ok) {
+            window.location.href = response.url;
+        }
+    });
+
+    </script>
     <script src="{% static 'js/activeNav.js' %}"></script>
     <script src="{% static 'js/sortTable.js' %}"></script>
     <script src="{% static 'js/loadingSpinner.js' %}"></script>
@@ -270,9 +295,9 @@ Comune di Bari
                                           </li>
                                         <li class="nav-item"><a class="nav-link" href="{% url 'admin:index'%}"><span>Accedi al Backoffice</span></a></li>
                                     {% endif %}    
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"><span>Logout</span></a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}" id="logout-link"><span>Logout</span></a></li>
                                 {% elif user.is_authenticated %}    
-                                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}"><span>Logout</span></a></li>
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}" id="logout-link"><span>Logout</span></a></li>
                                 {% else %}
                                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}"><span>Area riservata</span></a></li>
                                 {% endif %}
